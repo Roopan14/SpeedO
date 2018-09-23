@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Speed-O</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="click_start_to_track">Click Start to Track !</string>
+    <string name="start_time">Start Time</string>
+    <string name="duration">Duration</string>
+    <string name="distance">Distance</string>
+    <string name="end_time">End Time</string>
+    <string name="speed">Speed</string>
+    <string name="avg_speed">Avg Speed</string>
+    <string name="max_speed">Max Speed</string>
+    <string name="heading">Heading</string>
+    <string name="restore">Restore</string>
+</resources>
