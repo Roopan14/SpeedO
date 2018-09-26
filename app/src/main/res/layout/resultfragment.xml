@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/bottomsz"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.v7.widget.CardView
+        app:cardCornerRadius="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorWhite"
+        >
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+            <ImageView
+                android:id="@+id/transit"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                />
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="40dp"
+                >
+
+                <TextView
+                    android:id="@+id/distancetvfz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="20 KM"
+                    android:drawableStart="@drawable/distancefz"
+                    android:drawablePadding="32dp"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorTextGray"
+                    />
+
+                <TextView
+                    android:id="@+id/durationtvfz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:40"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/durationfz"
+                    android:drawablePadding="32dp"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorTextGray"
+                    />
+
+                <TextView
+                    android:id="@+id/avgspeedtvfz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40.5 KM/H"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/avgspeed"
+                    android:drawablePadding="32dp"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorTextGray"
+                    />
+
+                <TextView
+                    android:id="@+id/maxspeedtvfz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80.3 KM/H"
+                    android:layout_marginBottom="8dp"
+                    android:drawableStart="@drawable/maxspeed"
+                    android:drawablePadding="32dp"
+                    android:textSize="24sp"
+                    android:gravity="center"
+                    android:textColor="@color/colorTextGray"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finish"
+                android:textSize="28sp"
+                android:textColor="@color/colorBlue"
+                android:elevation="8dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                />
+
+    </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

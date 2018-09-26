@@ -2,8 +2,8 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape>
-            <gradient android:startColor="@color/colorPrimaryDark"
-                android:endColor="@color/colorPrimaryGradient"
+            <gradient android:startColor="@color/colorBlueAir"
+                android:endColor="@color/colorBlueOcean"
                 android:angle="180"/>
             <corners android:radius="8dp"/>
         </shape>
@@ -11,7 +11,7 @@
 
     <item>
         <shape>
-            <solid android:color="@color/colorPrimary"/>
+            <solid android:color="@color/colorBlue"/>
             <corners android:radius="8dp"/>
         </shape>
     </item>

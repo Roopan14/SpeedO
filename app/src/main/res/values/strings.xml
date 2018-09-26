@@ -12,4 +12,5 @@
     <string name="max_speed">Max Speed</string>
     <string name="heading">Heading</string>
     <string name="restore">Restore</string>
+    <string name="pause">Pause</string>
 </resources>

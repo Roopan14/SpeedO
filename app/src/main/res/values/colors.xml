@@ -5,5 +5,9 @@
     <color name="colorPrimaryGradient">#2dde98</color>
     <color name="colorBlue">#0079c1</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAirbnb">#fd5c63</color>
     <color name="colorWhite">#FFF</color>
+    <color name="colorBlueAir">#0077c8</color>
+    <color name="colorBlueOcean">#00aeff</color>
+    <color name="colorTextGray">#333333</color>
 </resources>

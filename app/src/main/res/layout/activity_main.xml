@@ -1,308 +1,432 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000"
     tools:context="com.example.roopanc.speed_o.MainActivity">
 
-    <include android:id="@+id/toolbarhome" layout="@layout/toolbar" />
-
-    <LinearLayout
-        android:id="@+id/linear"
-        android:layout_below="@id/toolbarhome"
-        android:layout_above="@+id/layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="16dp"
-        android:gravity="center_vertical"
-        >
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/start_time"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textAllCaps="true"
-                />
-
-            <TextView
-                android:id="@+id/starttimetv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="@string/start_time"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/duration"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-            <Chronometer
-                android:id="@+id/durationtv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
-                />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/distance"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/distancetv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="20.00 KM"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="Altitude"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/altitudetv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:textColor="@color/colorPrimary"
-                android:text="600.00 M"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/heading"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-            <TextView
-                android:id="@+id/headingtv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="349^"
-                android:textSize="20sp"
-                android:gravity="center_vertical"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/end_time"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textAllCaps="true"
-                />
-
-            <TextView
-                android:id="@+id/endtimetv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="@string/start_time"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-
-            <TextView
-                android:id="@+id/speedTV"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/speed"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textAllCaps="true"
-                />
-
-            <TextView
-                android:id="@+id/avgspeedtv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="20 KM/H"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            >
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:text="@string/max_speed"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textAllCaps="true"
-                />
-
-            <TextView
-                android:id="@+id/maxspeedtv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:text="40 KM/H"
-                android:textSize="20sp"
-                android:gravity="center"
-                />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/textview"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
+        <com.github.anastr.speedviewlib.PointerSpeedometer
+        android:id="@+id/pointerSpeedometer"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/click_start_to_track"
-        android:textSize="26sp"
-        android:layout_centerInParent="true"
+        app:sv_minSpeed="0"
+        app:sv_maxSpeed="180"
+        app:sv_unitTextSize="20sp"
+        app:sv_textSize="20sp"
+        app:sv_speedTextSize="20sp"
+        app:sv_withTremble="false"
+        android:layout_centerHorizontal="true"
+        app:sv_speedometerColor="@color/colorBlueOcean"
+        app:sv_backgroundCircleColor="@color/colorBlueAir"
         />
 
-    <LinearLayout
-        android:id="@id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:weightSum="2"
-        android:orientation="horizontal"
-        >
+
+        <ImageView
+            android:id="@+id/resetbt"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/restore"
+            android:tint="@color/colorAirbnb"
+            android:layout_margin="16dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            />
 
         <Button
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
             android:id="@+id/startbt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button"
+            android:layout_below="@id/pointerSpeedometer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
             android:padding="16dp"
+            android:background="@drawable/button"
             android:text="@string/start"
-            android:textSize="20sp"
             android:textColor="@color/colorWhite"
-            />
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableEnd="@drawable/start"
+            android:drawablePadding="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-        <Button
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/stopbt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <Chronometer
+            android:visibility="gone"
+            android:id="@+id/durationtvz"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button"
-            android:padding="16dp"
-            android:text="@string/stop"
-            android:textSize="20sp"
-            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textColor="@color/colorBlueAir"
+            android:layout_below="@id/pointerSpeedometer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp"
             />
 
-    </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/linear"
+            android:layout_above="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="16dp"
+            android:gravity="center_vertical"
+            >
 
-</RelativeLayout>
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/start_time"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    />
+
+                <TextView
+                    android:id="@+id/starttimetv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="@string/start_time"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/duration"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <Chronometer
+                    android:id="@+id/durationtv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorPrimary"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/distance"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/distancetv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="20.00 KM"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="Altitude"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/altitudetv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:text="600.00 M"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/heading"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+                <TextView
+                    android:id="@+id/headingtv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="349^"
+                    android:textSize="20sp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/end_time"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    />
+
+                <TextView
+                    android:id="@+id/endtimetv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="@string/start_time"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:id="@+id/speedTV"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/speed"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    />
+
+                <TextView
+                    android:id="@+id/avgspeedtv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="20 KM/H"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="@string/max_speed"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    />
+
+                <TextView
+                    android:id="@+id/maxspeedtv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_height="match_parent"
+                    android:text="-"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layout"
+            android:animateLayoutChanges="true"
+            android:layout_below="@id/pointerSpeedometer"
+            android:layout_marginTop="72dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:weightSum="2"
+            >
+
+            <ImageButton
+                android:id="@+id/pausebt"
+                android:layout_weight="1"
+                android:src="@drawable/pause"
+                android:background="#00000000"
+                android:tint="@color/colorBlue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageButton
+                android:id="@+id/stopbt"
+                android:layout_weight="1"
+                android:src="@drawable/stop"
+                android:background="#00000000"
+                android:tint="@color/colorAirbnb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/dislayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/distance"
+                />
+
+            <TextView
+                android:id="@+id/distancetvz"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorBlue"
+                android:layout_height="wrap_content"
+                android:text="0.00 KM"
+                android:textSize="24sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/altlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/altitude"
+                />
+
+            <TextView
+                android:id="@+id/altitudetvz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlue"
+                android:text="0.00 M"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/headingtvz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBlue"
+            android:text="0"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            />
+
+        <com.example.roopanc.speed_o.UI.CompassView
+            android:visibility="gone"
+            android:id="@+id/compass"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
+            />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

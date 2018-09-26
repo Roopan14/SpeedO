@@ -28,7 +28,10 @@ public class LogoFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null)
+                {
+                    getFragmentManager().popBackStack();
+                }
             }
         }, 1500);
     }

@@ -1,9 +1,12 @@
 package com.example.roopanc.speed_o;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,7 +15,10 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,11 +28,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.roopanc.speed_o.UI.CompassView;
 import com.example.roopanc.speed_o.receiver.LocResultReceiver;
 import com.example.roopanc.speed_o.service.LocationService;
+import com.github.anastr.speedviewlib.PointerSpeedometer;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
@@ -59,10 +71,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Chronometer durationTV;
     long elapsedSeconds, minutes, seconds, hours, elapsedTime;
     public TextView distanceTV, altitudeTV, headingTV, avgSpeedTV, maxSpeedTV, speedTV;
-    private Button startBT, stopBT;
+    private ImageButton stopBT, pauseBT;
+    private ImageView resetBT;
+    private Button startBT;
     public static int status = 0; //0-not started 1-started 2-paused 3-stopped
     private SensorManager sensorManager;
     private Sensor compassSensor;
+    private PointerSpeedometer speedometer;
+    private LinearLayout playbacklayout, distanceLayout, altitudeLayout;
+    private CompassView compassView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //setting a toolbar
-        toolbar = findViewById(R.id.toolbarhome);
-        toolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(toolbar);
+        //toolbar = findViewById(R.id.toolbarhome);
+        //toolbar.setTitle(getString(R.string.app_name));
+        //setSupportActionBar(toolbar);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         compassSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
@@ -87,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initializeViews();
 
         //
-        reset();
+        //reset();
 
     }
 
@@ -97,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }else{
             // permission granted
-            Toast.makeText(this, "Permission Already Granted", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Permission Already Granted", Toast.LENGTH_SHORT).show();
             checkLocationSettings();
         }
     }
@@ -146,15 +163,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startTimeTV = findViewById(R.id.starttimetv);
         endTimeTV = findViewById(R.id.endtimetv);
-        distanceTV = findViewById(R.id.distancetv);
-        altitudeTV = findViewById(R.id.altitudetv);
-        headingTV = findViewById(R.id.headingtv);
+        distanceTV = findViewById(R.id.distancetvz);
+        altitudeTV = findViewById(R.id.altitudetvz);
+        headingTV = findViewById(R.id.headingtvz);
         avgSpeedTV = findViewById(R.id.avgspeedtv);
         maxSpeedTV = findViewById(R.id.maxspeedtv);
 
         speedTV = findViewById(R.id.speedTV);
 
-        durationTV = findViewById(R.id.durationtv);
+        playbacklayout = findViewById(R.id.layout);
+        distanceLayout = findViewById(R.id.dislayout);
+        altitudeLayout = findViewById(R.id.altlayout);
+
+        compassView = findViewById(R.id.compass);
+
+        speedometer = findViewById(R.id.pointerSpeedometer);
+        speedometer.setWithTremble(false);
+
+        durationTV = findViewById(R.id.durationtvz);
         durationTV.setText("00:00:00");
         durationTV.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
@@ -177,8 +203,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         startBT = findViewById(R.id.startbt);
         startBT.setOnClickListener(this);
+        pauseBT = findViewById(R.id.pausebt);
+        pauseBT.setOnClickListener(this);
         stopBT = findViewById(R.id.stopbt);
         stopBT.setOnClickListener(this);
+        resetBT = findViewById(R.id.resetbt);
+        resetBT.setOnClickListener(this);
     }
 
     private void displayResult(String result[]) {
@@ -197,16 +227,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             avgSpeedTV.setText(_speed);
             maxSpeedTV.setText(_maxSpeed);
             altitudeTV.setText(_altitude);
+            speedometer.speedTo(Float.valueOf(result[1]));
             Log.d(TAG, "displayResult: "+_dist+"-"+_speed+"-"+_maxSpeed);
         }
     }
 
     private String calculateSpeed() {
 
-        double distance = Double.parseDouble(distanceTV.getText().toString().trim().split(" ")[0]);
+        double distance = 0.0;
+
+        if (!distanceTV.getText().toString().trim().equalsIgnoreCase("-"))
+        {
+            distance = Double.parseDouble(distanceTV.getText().toString().trim().split(" ")[0]);
+        }
+
         String _duration = durationTV.getText().toString().trim();
         String split[] = _duration.split(":");
-        if (split.length == 3)
+        if (split.length == 3 && distance > 0.0)
         {
             int hour = Integer.parseInt(split[0]);
             int minute = Integer.parseInt(split[1]);
@@ -257,10 +294,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void reset() {
 
+        speedometer.setSpeedAt(0);
+        speedometer.setWithTremble(false);
+        playbacklayout.setVisibility(View.GONE);
+        distanceLayout.setVisibility(View.GONE);
+        altitudeLayout.setVisibility(View.GONE);
+        compassView.setVisibility(View.GONE);
+        headingTV.setVisibility(View.GONE);
+        startBT.setVisibility(View.VISIBLE);
         startBT.setText("Start");
+        durationTV.setVisibility(View.GONE);
         status = 0;
-        elapsedTime = durationTV.getBase() - SystemClock.elapsedRealtime();
+        elapsedTime = 0;//durationTV.getBase() - SystemClock.elapsedRealtime();
         durationTV.stop();
+        stopServize();
 
         durationTV.setText("-");
         distanceTV.setText("-");
@@ -285,61 +332,113 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId())
         {
             case R.id.startbt:
-                if (startBT.getText().toString().trim().equalsIgnoreCase("Start"))
-                {
-                    //change text to pause & set status = 1
-
-                    if (status == 2)
-                    {
-                        //resuming from pause state
-                        durationTV.setBase(SystemClock.elapsedRealtime()+elapsedTime);
-                        durationTV.start();
-                    }
-                    else {
-                        //running for first time
-                        durationTV.setBase(SystemClock.elapsedRealtime());
-                        durationTV.start();
-                        startServize(new LocationResultReceiver(this));
-
-                        sensorManager.registerListener(this, compassSensor, SensorManager.SENSOR_DELAY_NORMAL);
-                    }
-
-                    startBT.setText("Pause");
-                    status = 1;
-                    String time = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.ENGLISH).format(new Date());
-                    startTimeTV.setText(time);
-                    endTimeTV.setText("-");
-
-                }
-                else {
-                    //change text to pause & set status = 2
-                    startBT.setText("Start");
-                    status = 2;
-                    elapsedTime = durationTV.getBase() - SystemClock.elapsedRealtime();
-                    durationTV.stop();
-                }
+                startPressed();
+                break;
+            case R.id.pausebt:
+                pausePressed();
                 break;
             case R.id.stopbt:
-                if (status == 1) {
-                    String speed = calculateSpeed();
-                    if (!speed.equalsIgnoreCase("-"))
-                    {
-                        speedTV.setText(getString(R.string.app_name));
-                        avgSpeedTV.setText(speed);
-                    }
-
-                    startBT.setText("Start");
-                    status = 3;
-                    String time = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.ENGLISH).format(new Date());
-                    endTimeTV.setText(time);
-                    durationTV.stop();
-                    elapsedTime = 0;
-                    stopServize();
-
-                    sensorManager.unregisterListener(this, compassSensor);
-                }
+                stopPressed();
+                break;
+            case R.id.resetbt:
+                reset();
                 break;
         }
+    }
+
+    private void stopPressed() {
+        if (status == 1) {
+            String speed = calculateSpeed();
+            if (!speed.equalsIgnoreCase("-"))
+            {
+                speedTV.setText(getString(R.string.avg_speed));
+                avgSpeedTV.setText(speed);
+            }
+
+            playbacklayout.setVisibility(View.GONE);
+            distanceLayout.setVisibility(View.GONE);
+            altitudeLayout.setVisibility(View.GONE);
+            headingTV.setVisibility(View.GONE);
+            compassView.setVisibility(View.GONE);
+            startBT.setVisibility(View.VISIBLE);
+            startBT.setText("Start");
+            durationTV.setVisibility(View.GONE);
+            status = 3;
+            String time = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.ENGLISH).format(new Date());
+            speedometer.setWithTremble(false);
+            endTimeTV.setText(time);
+            durationTV.stop();
+            elapsedTime = 0;
+            stopServize();
+            speedometer.setSpeedAt(0);
+            speedometer.setWithTremble(false);
+            sensorManager.unregisterListener(this, compassSensor);
+
+            callFragment(speed);
+
+        }
+
+    }
+
+    private void callFragment(String speed) {
+        FragmentManager fm = getSupportFragmentManager();
+        ResultFragment dialogFragment = new ResultFragment ();
+        Bundle bundle = new Bundle();
+        bundle.putString("avgspeed", speed);
+        bundle.putString("maxspeed", maxSpeedTV.getText().toString().trim());
+        bundle.putString("distance", distanceTV.getText().toString().trim());
+        bundle.putString("duration", durationTV.getText().toString().trim());
+        dialogFragment.setArguments(bundle);
+        dialogFragment.show(fm, "Sample Fragment");
+    }
+
+    private void startPressed() {
+        //change text to pause & set status = 1
+
+        if (status == 2)
+        {
+            //resuming from pause state
+            durationTV.setBase(SystemClock.elapsedRealtime()+elapsedTime);
+            durationTV.start();
+        }
+        else {
+            //running for first time
+            durationTV.setBase(SystemClock.elapsedRealtime());
+            durationTV.start();
+            startServize(new LocationResultReceiver(this));
+
+            sensorManager.registerListener(this, compassSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+        playbacklayout.setVisibility(View.VISIBLE);
+        startBT.setVisibility(View.GONE);
+        durationTV.setVisibility(View.VISIBLE);
+        distanceLayout.setVisibility(View.VISIBLE);
+        altitudeLayout.setVisibility(View.VISIBLE);
+        compassView.setVisibility(View.VISIBLE);
+        headingTV.setVisibility(View.VISIBLE);
+        //speedometer.setWithTremble(true);
+        status = 1;
+        String time = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.ENGLISH).format(new Date());
+        startTimeTV.setText(time);
+        endTimeTV.setText("-");
+    }
+
+    private void pausePressed() {
+        //change text to start & set status = 2
+        //show start button
+        playbacklayout.setVisibility(View.GONE);
+        distanceLayout.setVisibility(View.GONE);
+        altitudeLayout.setVisibility(View.GONE);
+        compassView.setVisibility(View.GONE);
+        headingTV.setVisibility(View.GONE);
+        startBT.setVisibility(View.VISIBLE);
+        startBT.setText("Resume");
+        durationTV.setVisibility(View.GONE);
+        speedometer.setWithTremble(false);
+        status = 2;
+        elapsedTime = durationTV.getBase() - SystemClock.elapsedRealtime();
+        durationTV.stop();
     }
 
     private void stopServize() {
@@ -389,37 +488,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             float degree = Math.round(sensorEvent.values[0]);
             String direction = null;
-            if (degree > 0 && degree < 90)
+
+            if (degree > 337.5 || (degree > 0 && degree < 22.5))
             {
                 direction = "N";
-                if (degree > 30 && degree < 60)
-                {
-                    direction = "NE";
-                }
             }
-            else if (degree > 90 && degree <180)
+            else if (degree > 22.5 && degree < 67.5)
+            {
+                direction = "NE";
+            }
+            else if (degree > 67.5 && degree < 112.5)
             {
                 direction = "E";
-                if (degree > 120 && degree < 150)
-                {
-                    direction = "SE";
-                }
             }
-            else if ((degree > 180 && degree <270))
+            else if (degree > 112.5 && degree < 157.5)
+            {
+                direction = "SE";
+            }
+            else if (degree > 157.5 && degree < 202.5)
             {
                 direction = "S";
-                if (degree > 210 && degree < 240)
-                {
-                    direction = "SW";
-                }
+            }
+            else if (degree > 202.5 && degree < 247.5)
+            {
+                direction = "SW";
+            }
+            else if (degree > 247.5 && degree < 292.5)
+            {
+                direction = "W";
             }
             else {
-                direction = "W";
-                if (degree > 300 && degree < 330)
-                {
-                    direction = "NW";
-                }
+                direction = "NW";
             }
+            compassView.setRotationAngle(degree);
             headingTV.setText(degree + " \u00b0" + " " + direction);
         }
         if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE)
